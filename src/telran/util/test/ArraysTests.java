@@ -2,6 +2,8 @@ package telran.util.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Comparator;
+
 import org.junit.jupiter.api.Test;
 
 import telran.util.Arrays;
@@ -19,16 +21,59 @@ String[] stringsMin = {"abc", "lmn", "123",  "y"};
 	}
 	@Test
 	void minValueTest() {
-		assertEquals("y", Arrays.min(stringsMin, new StringLengthComparator()));
-		assertEquals("123", Arrays.min(stringsMin, new StringsComparator()));
+		Comparator<String> compLength = (s1, s2) -> s1.length() - s2.length();
+		assertEquals("y", Arrays.min(stringsMin,
+				compLength));
+		Comparator<String> compNative = (s1, s2) -> s1.compareTo(s2);
+		assertEquals("123", Arrays.min(stringsMin, compNative));
 	}
 	@Test
 	void bubbleSortTest() {
 		Integer [] expected = {4, 8, 56, 100, 41, 23, -3, -7};
 		Integer [] numbersCopy = java.util.Arrays.copyOf(numbers, numbers.length);
-		Arrays.bubbleSort(numbersCopy, new EvenOddComparator());
+         /* lambda expression example */
+	//	Comparator<Integer> evenOddComp = (num1, num2) ->
+   //	evenOddComparator(num1, num2);
+		/*************************************/
+		/* method reference */
+		Comparator<Integer> evenOddComp = ArraysTests::evenOddComparator;
+		/*********************************************/
+		Arrays.bubbleSort(numbersCopy, evenOddComp);
 		assertArrayEquals(expected, numbersCopy);
 		
 	}
+	static int evenOddComparator(Integer num1, Integer num2) {
+		//first even numbers sorted in the ascending order
+		//last odd numbers sorted in the descending order
+		boolean isNum1Even = num1 % 2 == 0;
+		boolean isNum2Even = num2 % 2 == 0;
+		int res = 1;
+		if (isNum1Even && isNum2Even) {
+			res = Integer.compare(num1, num2);
+		} else if (!isNum1Even && !isNum2Even) {
+			res = Integer.compare(num2, num1);
+		} else if (isNum1Even) {
+			res = -1;
+		}
+		return res;
+	}
+	@Test
+	void searchTest() {
+		Integer[] expectedEven = {100, 4, 8,  56};
+		assertArrayEquals(expectedEven, Arrays.search(numbers,
+				a -> a % 2 == 0));
+		Integer[] expectedNegative = {-3,-7};
+		assertArrayEquals(expectedNegative, Arrays.search(numbers,
+				a -> a < 0));
+		
+	}
+	@Test
+	void binarySearchTest() {
+		//TODO
+	}
+	 @Test
+	 void removeIfTest() {
+		 //TODO
+	 }
 
 }
