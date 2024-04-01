@@ -51,7 +51,6 @@ public class Arrays {
 		
 	}
 	public static <T> int binarySearch(T[] array, T key, Comparator<T> comp) {
-		//TODO
 		//left index = 0
 		//right index = array.length - 1
 		//middle (left + right) / 2
@@ -60,8 +59,20 @@ public class Arrays {
 		//while left <= right
 		//returns exactly what the standard binarySearch does
 		//if there are several equaled elements no guarantee that
-		// being returned index is the one to first occurrence
-		return -1;
+		// being returned index is the one to the first occurrence
+		int left = 0;
+		int right = array.length - 1;
+		int middle = (left + right) / 2;
+		int res = -1;
+		while(left <= right && (res = comp.compare(key, array[middle])) != 0) {
+			if (res > 0) {
+				left = middle + 1;
+			} else {
+				right = middle - 1;
+			}
+			middle = (left + right) / 2;
+		}
+		return left > right ? -(left + 1) : middle;
 	}
 	public static <T> T[] search(T[] array, Predicate<T> predicate) {
 		//Impossible to allocate memory for generic array
@@ -76,8 +87,8 @@ public class Arrays {
 		return java.util.Arrays.copyOf(arResult,index);
 	}
 	public static <T> T[] removeIf(T[] array, Predicate<T> predicate) {
-		//TODO
 		//removes all elements of array matching a given predicate
-		return null;
+		//returns new array with no elements matching a given predicate
+		return search(array, e -> !predicate.test(e));
 	}
 }
