@@ -87,5 +87,21 @@ String[] stringsMin = {"abc", "lmn", "123",  "y"};
 			assertArrayEquals(expectedNegative, Arrays.removeIf(numbers,
 					a -> a > 0));
 	 }
+	 @Test
+	 void addTest() {
+		 Integer[] expected = {100, -3, 23, 4, 8, 41, 56, -7, 150};
+		 Integer[] actual = Arrays.add(numbers, 150);
+		 assertArrayEquals(expected, actual);
+	 }
 
 }
+class Person {
+	long id;
+	int birthYear;
+	public Person(long id, int birthYear) {
+		this.id = id;
+		this.birthYear = birthYear;
+	}
+	
+}
+

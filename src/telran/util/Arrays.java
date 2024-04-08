@@ -89,6 +89,11 @@ public class Arrays {
 	public static <T> T[] removeIf(T[] array, Predicate<T> predicate) {
 		//removes all elements of array matching a given predicate
 		//returns new array with no elements matching a given predicate
-		return search(array, e -> !predicate.test(e));
+		return search(array, predicate.negate());
+	}
+	public static <T> T[] add (T[] array, T element) {
+		T[] result = java.util.Arrays.copyOf(array, array.length + 1);
+		result[array.length] = element;
+		return result;
 	}
 }
