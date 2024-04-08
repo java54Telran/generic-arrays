@@ -43,7 +43,11 @@ public class Arrays {
 			}
 		}
 	}
-
+	public static <T> void bubbleSort(T[] array) {
+		//TODO
+		//research: write the code based on the existing one of bubbleSort with comparator
+	}
+	
 	private static <T> void swap(T[] array, int i, int j) {
 		T tmp = array[i];
 		array[i] = array[j];
@@ -95,5 +99,8 @@ public class Arrays {
 		T[] result = java.util.Arrays.copyOf(array, array.length + 1);
 		result[array.length] = element;
 		return result;
+	}
+	public static <T> T[] copy(T[] array) {
+		return java.util.Arrays.copyOf(array, array.length);
 	}
 }
