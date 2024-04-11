@@ -24,7 +24,6 @@ public class Company implements Iterable<Employee>{
 		return index < 0 ? null : employees[index];
 	}
 	public Employee removeEmployee(long id) {
-		//TODO
 		//removes from the company an employee with a given id
 		//if such employee doesn't exist, throw NoSuchElementException
 		//returns reference to being removed employee
@@ -37,6 +36,8 @@ public class Company implements Iterable<Employee>{
 		return result;
 	}
 	public int getDepartmentBudget(String department) {
+		//FIXME 
+		//should be updated
 		//returns sum of basic salary values for all employees of a given department
 		//if employees of a given department don't exist, returns 0
 		int result = 0;
@@ -56,6 +57,11 @@ public class Company implements Iterable<Employee>{
 		
 		return new CompanyIterator();
 	}
+	public String[] getDepartments() {
+		//TODO
+		//write method returning all departments
+		return null;
+	}
 	private class CompanyIterator implements Iterator<Employee> {
 		int currentIndex = 0;
 		//iterating all employees in the ascending order of the ID values
@@ -72,4 +78,5 @@ public class Company implements Iterable<Employee>{
 		}
 		
 	}
+	
 }
