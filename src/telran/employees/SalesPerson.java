@@ -1,12 +1,17 @@
 package telran.employees;
 
 public class SalesPerson extends WageEmployee {
-	//FIXME
-		//Constructor of class SalesPerson must take additional parameters (see UML schema)
-	public SalesPerson(long id, int basicSalary, String department, int hours, int wage) {
+	
+	float percent;
+	long sales;
+	public SalesPerson(long id, int basicSalary, String department, int hours, int wage, float percent, long sales) {
 		super(id, basicSalary, department, hours, wage);
-		// TODO Auto-generated constructor stub
+		this.percent = percent;
+		this.sales = sales;
 	}
-	//TODO (see UML schema)
+	@Override
+	public int computeSalary() {
+		return Math.round(super.computeSalary() + sales * percent / 100);
+	}
 
 }
