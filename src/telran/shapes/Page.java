@@ -1,5 +1,6 @@
 package telran.shapes;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import telran.shapes.exceptions.NoCanvasException;
 import telran.shapes.exceptions.ShapeAlreadyExistsException;
@@ -39,12 +40,17 @@ public class Page implements Iterable<Shape>{
 		return result;
 	}
 	public Shape removeShape(long id) {
-		//TODO
-		return null;
+		int removedIndex = Arrays.indexOf(shapes, new Canvas(id));
+		if (removedIndex < 0) {
+			throw new ShapeNotFoundException(id);
+		}
+		Shape removedShape = shapes[removedIndex];
+		shapes = Arrays.removeIf(shapes, s -> s.getId() == id);
+		return removedShape;
 	}
 	public Shape removeShape(Long[] canvasIds, long id) {
-		//TODO
-		return null;
+		Canvas canvas = getCanvas(canvasIds);
+		return canvas.removeShape(id);
 	}
 	@Override
 	public Iterator<Shape> iterator() {
@@ -52,17 +58,19 @@ public class Page implements Iterable<Shape>{
 		return new PageIterator();
 	}
 	private class PageIterator implements Iterator<Shape> {
-
+		int currentIndex = 0;
 		@Override
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return false;
+			
+			return currentIndex < shapes.length;
 		}
 
 		@Override
 		public Shape next() {
-			// TODO Auto-generated method stub
-			return null;
+			if(!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			return shapes[currentIndex++];
 		}
 		
 	}

@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import telran.shapes.exceptions.ShapeAlreadyExistsException;
+import telran.shapes.exceptions.ShapeNotFoundException;
 import telran.util.Arrays;
 
 public class Canvas extends Shape implements Iterable<Shape>{
@@ -35,9 +36,14 @@ public class Canvas extends Shape implements Iterable<Shape>{
 		}
 		shapes = Arrays.add(shapes, shape);
 	}
-	public void removeShape(long id) {
-		//FIXME see UML diagram
+	public Shape removeShape(long id) {
+		int removedIndex = Arrays.indexOf(shapes, new Canvas(id));
+		if (removedIndex < 0) {
+			throw new ShapeNotFoundException(id);
+		}
+		Shape removedShape = shapes[removedIndex];
 		shapes = Arrays.removeIf(shapes, s -> s.getId() == id);
+		return removedShape;
 	}
 	@Override
 	public Iterator<Shape> iterator() {

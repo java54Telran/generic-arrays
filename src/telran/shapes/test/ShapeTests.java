@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import telran.shapes.*;
+import telran.shapes.exceptions.ShapeAlreadyExistsException;
+import telran.shapes.exceptions.ShapeNotFoundException;
 
 class ShapeTests {
 private static final long ID11 = 11;
@@ -69,9 +71,16 @@ void setUp() {
 	@Test
 	void testRemoveShape() {
 		canvas1.removeShape(ID11);
+		assertThrowsExactly(ShapeNotFoundException.class, () -> canvas1.removeShape(ID11));
 		runTest(new Shape[] {shape12}, canvas1);
 		canvas2.removeShape(1);
 		runTest(new Shape[] {shape21,shape22}, canvas2);
+	}
+	@Test
+	void testAddShape() {
+		assertThrowsExactly(ShapeAlreadyExistsException.class,
+				() -> canvas1.addShape(shape11));
+		canvas1.addShape(new Canvas(11111111));
 	}
 	@Test
 	void testIterator() {
