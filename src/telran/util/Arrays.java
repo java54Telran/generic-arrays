@@ -55,6 +55,7 @@ public class Arrays {
 		
 	}
 	public static <T> int binarySearch(T[] array, T key, Comparator<T> comp) {
+		//O[LogN]
 		//left index = 0
 		//right index = array.length - 1
 		//middle (left + right) / 2
